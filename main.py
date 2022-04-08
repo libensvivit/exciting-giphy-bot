@@ -32,12 +32,6 @@ def getGiphyImage(search_keyword):
   image_url = data[image_position]['images']['original']['url']
   return image_url
 
-def giphy(update, context):
-    search = update.message.text.split()[1]
-    update.message.reply_text("cevap versene amk")
-    #update.message.reply_text("ananin ami calissana," + search)
-    #update.message.reply_animation(getGiphyImage(search))
-
 def help(update, context):
     update.message.reply_text('/giphy <search> \n/pornhub <search>')
 
@@ -48,7 +42,11 @@ def pornhub(update, context):
     update.message.reply_text(getPornhub(update.message.text.split()[1]))
 
 def giphy(update, context):
-    update.message.reply_animation(getGiphyImage(update.message.text.split()[1]))
+    search = update.message.text.split()[1]
+    update.message.reply_text(search)
+    #update.message.reply_text("ananin ami calissana," + search)
+    #update.message.reply_animation(getGiphyImage(search))
+    update.message.reply_animation(getGiphyImage(search))
 
 def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
