@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 def getGiphyImage(search_keyword):
   URL = 'http://api.giphy.com'
   SEARCH_PATH = '/v1/gifs/search'
-  payload = {'api_key': GIPHY_API_KEY, 'q': search_keyword}
+  payload = {'api_key': 'gKs8c63gf2e6Vq75MlQBWpuW1yCD7TsC', 'q': search_keyword}
   r = requests.get(URL + SEARCH_PATH, params=payload)
   data = r.json()['data']
   image_position = random.randrange(0, len(data))
