@@ -33,8 +33,9 @@ def getGiphyImage(search_keyword):
   return image_url
 
 def giphy(update, context):
-    search = '-'.join(update.message.text.split()[1:])
-    update.message.reply_text("ananin ami calissana," + search)
+    #search = '-'.join(update.message.text.split()[1:])
+    update.message.reply_text(update.message.text)
+    #update.message.reply_text("ananin ami calissana," + search)
     #update.message.reply_animation(getGiphyImage(search))
 
 def help(update, context):
