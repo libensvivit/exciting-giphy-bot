@@ -36,7 +36,7 @@ def giphy(update, context):
     search = update.message.text.split()[1]
     update.message.reply_text("cevap versene amk")
     #update.message.reply_text("ananin ami calissana," + search)
-    update.message.reply_animation(getGiphyImage(search))
+    #update.message.reply_animation(getGiphyImage(search))
 
 def help(update, context):
     update.message.reply_text('/giphy <search> \n/pornhub <search>')
