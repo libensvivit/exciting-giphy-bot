@@ -35,7 +35,7 @@ def getGiphyImage(search_keyword):
 def giphy(update, context):
     search = '-'.join(update.message.text.split()[1:])
     update.message.reply_text(search)
-    update.message.reply_animation(getGiphyImage(search))
+    #update.message.reply_animation(getGiphyImage(search))
 
 def help(update, context):
     update.message.reply_text('/giphy <search> \n/pornhub <search>')
