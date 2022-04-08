@@ -40,7 +40,8 @@ def giphy(update, context):
     N = 1
     if update.message.text.split()[-1].isnumeric():
         N = int(update.message.text.split()[-1])
-        
+        search_keyword = "-".join(update.message.text.split()[1:-1])
+
     for _ in range(N):
         URL = 'http://api.giphy.com'
         SEARCH_PATH = '/v1/gifs/search'
