@@ -16,9 +16,9 @@ def quote(update, context):
     N = 1
     if update.message.text.split()[-1].isnumeric():
         N = int(update.message.text.split()[-1])
-    for _ in range(N):
+    for i in range(N):
         response = requests.get("https://api.quotable.io/random")
-        update.message.reply_text(json.loads(response.text)['content']+"\n-"+json.loads(response.text)['author'])
+        update.message.reply_text(str(i)+"/"+str(N)+"\n"+json.loads(response.text)['content']+"\n-"+json.loads(response.text)['author'])
 
 def pornhub(update, context):
     search_keyword = "-".join(update.message.text.split()[1:])
@@ -27,7 +27,7 @@ def pornhub(update, context):
         N = int(update.message.text.split()[-1])
         search_keyword = "-".join(update.message.text.split()[1:-1])
 
-    for _ in range(N):
+    for i in range(N):
         URL = 'https://www.pornhub.com/video/search?search='
         response = requests.get(URL + search_keyword)
         soup = BeautifulSoup(response.text, 'lxml')
@@ -35,7 +35,7 @@ def pornhub(update, context):
         for a in soup.find_all('a', href=True):
             if a['href'].startswith("/view_video"):
                 ph_links.append('https://www.pornhub.com' + a['href'])
-        update.message.reply_text(random.choice(ph_links))
+        update.message.reply_text(str(i)+"/"+str(N)+"\n"+random.choice(ph_links))
 
 def giphy(update, context):
     search_keyword = "-".join(update.message.text.split()[1:])
@@ -44,7 +44,7 @@ def giphy(update, context):
         N = int(update.message.text.split()[-1])
         search_keyword = "-".join(update.message.text.split()[1:-1])
 
-    for _ in range(N):
+    for i in range(N):
         URL = 'http://api.giphy.com'
         SEARCH_PATH = '/v1/gifs/search'
         payload = {'api_key': 'gKs8c63gf2e6Vq75MlQBWpuW1yCD7TsC', 'q': search_keyword}
@@ -52,7 +52,7 @@ def giphy(update, context):
         data = r.json()['data']
         image_position = random.randrange(0, len(data))
         image_url = data[image_position]['images']['original']['url']
-        update.message.reply_animation(image_url)
+        update.message.reply_animation(image_url, caption=str(i)+"/"+str(N))
 
 def help(update, context):
     update.message.reply_text(
