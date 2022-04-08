@@ -42,7 +42,7 @@ def pornhub(update, context):
     update.message.reply_text(getPornhub(update.message.text.split()[1]))
 
 def giphy(update, context):
-    search = update.message.text.split()[1]
+    search = "-".join(update.message.text.split()[1:])
     update.message.reply_text(search)
     #update.message.reply_text("ananin ami calissana," + search)
     #update.message.reply_animation(getGiphyImage(search))
