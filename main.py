@@ -24,9 +24,9 @@ def help(update, context):
     update.message.reply_text('Currently I am in Alpha stage, help me also!')
 
 def greet(update, context):
-    #getGiphyImage(context)
-    update.message.reply_text(context)
-    update.message.reply_animation('https://media.giphy.com/media/nrXif9YExO9EI/giphy.gif')
+    giphy = getGiphyImage(update.message.text)
+    #update.message.reply_text(context)
+    update.message.reply_animation(giphy)
 
 
 def error(update, context):
