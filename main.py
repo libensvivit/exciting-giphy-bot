@@ -1,4 +1,5 @@
 import logging, requests, random
+from bs4 import BeautifulSoup
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
@@ -12,8 +13,14 @@ def getYoutube(search_keyword):
     return 0
 
 def getPornhub(search_keyword):
-    URL = 'https://www.pornhub.com/video/search?search=sex'
-    r = requests.get(URL + search_keyword)
+    URL = 'https://www.pornhub.com/video/search?search='
+    response = requests.get(URL + search_keyword)
+    soup = BeautifulSoup(response.text, 'lxml')
+    ph_links = []
+    for a in soup.find_all('a', href=True):
+        if a['href'].startswith("/view_video"):
+            ph_links.append('https://www.pornhub.com' + a['href'])
+    return random.choice(ph_links)
 
 def getGiphyImage(search_keyword):
   URL = 'http://api.giphy.com'
@@ -26,42 +33,29 @@ def getGiphyImage(search_keyword):
   return image_url
 
 def help(update, context):
-    """Send a message when the command /help is issued."""
-    update.message.reply_text('Currently I am in Alpha stage, help me also!')
+    update.message.reply_text('/giphy <search> \n /pornhub <search>')
 
-def greet(update, context):
-    giphy = getGiphyImage(update.message.text.split()[1])
-    update.message.reply_animation(giphy)
+def pornhub(update, context):
+    update.message.reply_text(getPornhub(update.message.text.split()[1]))
 
+def giphy(update, context):
+    update.message.reply_animation(getGiphyImage(update.message.text.split()[1]))
 
 def error(update, context):
-    """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 
 def main():
-    """Start the bot."""
-    # Create the Updater and pass it your bot's token.
-    # Make sure to set use_context=True to use the new context based callbacks
-    # Post version 12 this will no longer be necessary
     updater = Updater("5225421589:AAEq4Hr37vkVO4_2YYVTwHSTc6QxhlkD0aU", use_context=True)
-
-    # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
-    # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("help", help))
-    dp.add_handler(CommandHandler("greet", greet))
+    dp.add_handler(CommandHandler("giphy", giphy))
+    dp.add_handler(CommandHandler("pornhub", pornhub))
 
-    # log all errors
     dp.add_error_handler(error)
 
-    # Start the Bot
     updater.start_polling()
-
-    # Run the bot until you press Ctrl-C or the process receives SIGINT,
-    # SIGTERM or SIGABRT. This should be used most of the time, since
-    # start_polling() is non-blocking and will stop the bot gracefully.
     updater.idle()
 
 
