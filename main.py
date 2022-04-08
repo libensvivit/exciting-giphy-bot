@@ -9,24 +9,15 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
-# Define a few command handlers. These usually take the two arguments update and
-# context. Error handlers also receive the raised TelegramError object in error.
-def start(update, context):
-    """Send a message when the command /start is issued."""
-    update.message.reply_text('Hey this is your bot!')
-
+def getGiphyImage(update, search):
+    update.message.reply_animation('https://media.giphy.com/media/nrXif9YExO9EI/giphy.gif')
 
 def help(update, context):
     """Send a message when the command /help is issued."""
     update.message.reply_text('Currently I am in Alpha stage, help me also!')
 
-def piracy(update, context):
-    update.message.reply_text('Ahhan, FBI wants to know your location!')
-
-
-def echo(update, context):
-    """Echo the user message."""
-    update.message.reply_text(update.message.text)
+def greet(update, context):
+    update.message.reply_animation('https://media.giphy.com/media/nrXif9YExO9EI/giphy.gif')
 
 
 def error(update, context):
@@ -45,12 +36,8 @@ def main():
     dp = updater.dispatcher
 
     # on different commands - answer in Telegram
-    dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
-    dp.add_handler(CommandHandler("piracy", piracy))
-
-    # on noncommand i.e message - echo the message on Telegram
-    dp.add_handler(MessageHandler(Filters.text, echo))
+    dp.add_handler(CommandHandler("greet", greet))
 
     # log all errors
     dp.add_error_handler(error)
