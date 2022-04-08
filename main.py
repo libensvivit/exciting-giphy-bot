@@ -8,6 +8,12 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
+def getYoutube(search_keyword):
+    return 0
+
+def getPornhub(search_keyword):
+    URL = 'https://www.pornhub.com/video/search?search=sex'
+    r = requests.get(URL + search_keyword)
 
 def getGiphyImage(search_keyword):
   URL = 'http://api.giphy.com'
