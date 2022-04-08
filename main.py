@@ -9,14 +9,23 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
-def getGiphyImage(update, search):
-    update.message.reply_animation('https://media.giphy.com/media/nrXif9YExO9EI/giphy.gif')
+def getGiphyImage(search_keyword):
+  URL = 'http://api.giphy.com'
+  SEARCH_PATH = '/v1/gifs/search'
+  payload = {'api_key': GIPHY_API_KEY, 'q': search_keyword}
+  r = requests.get(URL + SEARCH_PATH, params=payload)
+  data = r.json()['data']
+  image_position = random.randrange(0, len(data))
+  image_url = data[image_position]['images']['original']['url']
+  return image_url
 
 def help(update, context):
     """Send a message when the command /help is issued."""
     update.message.reply_text('Currently I am in Alpha stage, help me also!')
 
 def greet(update, context):
+    #getGiphyImage(context)
+    update.message.reply_text(context)
     update.message.reply_animation('https://media.giphy.com/media/nrXif9YExO9EI/giphy.gif')
 
 
