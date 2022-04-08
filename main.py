@@ -1,4 +1,4 @@
-import logging
+import logging, requests, random
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
