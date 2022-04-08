@@ -14,7 +14,7 @@ def error(update, context):
 
 def help(update, context):
     update.message.reply_text(
-        '/giphy <search>\n'
+        '/giphy <search> <# times>\n'
         '/pornhub <search>\n'
         '/quote'
         )
@@ -37,14 +37,19 @@ def pornhub(update, context):
 
 def giphy(update, context):
     search_keyword = "-".join(update.message.text.split()[1:])
-    URL = 'http://api.giphy.com'
-    SEARCH_PATH = '/v1/gifs/search'
-    payload = {'api_key': 'gKs8c63gf2e6Vq75MlQBWpuW1yCD7TsC', 'q': search_keyword}
-    r = requests.get(URL + SEARCH_PATH, params=payload)
-    data = r.json()['data']
-    image_position = random.randrange(0, len(data))
-    image_url = data[image_position]['images']['original']['url']
-    update.message.reply_animation(image_url)
+    N = 1
+    if update.message.text.split()[-1].isnumeric():
+        N = int(update.message.text.split()[-1])
+        
+    for _ in range(N):
+        URL = 'http://api.giphy.com'
+        SEARCH_PATH = '/v1/gifs/search'
+        payload = {'api_key': 'gKs8c63gf2e6Vq75MlQBWpuW1yCD7TsC', 'q': search_keyword}
+        r = requests.get(URL + SEARCH_PATH, params=payload)
+        data = r.json()['data']
+        image_position = random.randrange(0, len(data))
+        image_url = data[image_position]['images']['original']['url']
+        update.message.reply_animation(image_url)
 
 
 def main():
