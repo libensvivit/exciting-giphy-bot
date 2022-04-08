@@ -32,8 +32,15 @@ def getGiphyImage(search_keyword):
   image_url = data[image_position]['images']['original']['url']
   return image_url
 
+def giphy(update, context):
+    search = update.message.text.split()[1:]
+    update.message.reply_animation(getGiphyImage(' '.join(search)))
+
 def help(update, context):
-    update.message.reply_text('/giphy <search> \n /pornhub <search>')
+    update.message.reply_text('/giphy <search> \n/pornhub <search>')
+
+def youtube(update, context):
+    update.message.reply_text(getYoutube(update.message.text.split()[1]))
 
 def pornhub(update, context):
     update.message.reply_text(getPornhub(update.message.text.split()[1]))
@@ -52,6 +59,7 @@ def main():
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("giphy", giphy))
     dp.add_handler(CommandHandler("pornhub", pornhub))
+    dp.add_handler(CommandHandler("youtube", youtube))
 
     dp.add_error_handler(error)
 
