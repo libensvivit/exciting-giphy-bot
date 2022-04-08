@@ -1,4 +1,4 @@
-import logging, requests, random
+import logging, requests, random, json
 from bs4 import BeautifulSoup
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
@@ -15,12 +15,13 @@ def error(update, context):
 def help(update, context):
     update.message.reply_text(
         '/giphy <search>\n'
-        '/pornhub <search>'
+        '/pornhub <search>\n'
+        '/quote'
         )
 
 def quote(update, context):
     response = requests.get("https://api.quotable.io/random")
-    update.message.reply_text(response.content+"\n-"+response.author)
+    update.message.reply_text(json.loads(response.text)['content']+"\n-"+json.loads(response.text)['author'])
 
 def pornhub(update, context):
     search_keyword = update.message.text.split()[1]
