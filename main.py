@@ -18,7 +18,7 @@ def quote(update, context):
         N = int(update.message.text.split()[-1])
     for i in range(N):
         response = requests.get("https://api.quotable.io/random")
-        update.message.reply_text(str(i)+"/"+str(N)+"\n"+json.loads(response.text)['content']+"\n-"+json.loads(response.text)['author'])
+        update.message.reply_text(str(i+1)+"/"+str(N)+"\n"+json.loads(response.text)['content']+"\n-"+json.loads(response.text)['author'])
 
 def pornhub(update, context):
     search_keyword = "-".join(update.message.text.split()[1:])
@@ -35,7 +35,7 @@ def pornhub(update, context):
         for a in soup.find_all('a', href=True):
             if a['href'].startswith("/view_video"):
                 ph_links.append('https://www.pornhub.com' + a['href'])
-        update.message.reply_text(str(i)+"/"+str(N)+"\n"+random.choice(ph_links))
+        update.message.reply_text(str(i+1)+"/"+str(N)+"\n"+random.choice(ph_links))
 
 def giphy(update, context):
     search_keyword = "-".join(update.message.text.split()[1:])
@@ -52,7 +52,7 @@ def giphy(update, context):
         data = r.json()['data']
         image_position = random.randrange(0, len(data))
         image_url = data[image_position]['images']['original']['url']
-        update.message.reply_animation(image_url, caption=str(i)+"/"+str(N))
+        update.message.reply_animation(image_url, caption=str(i+1)+"/"+str(N))
 
 def help(update, context):
     update.message.reply_text(
