@@ -20,7 +20,7 @@ def quote(update, context):
         response = requests.get("https://api.quotable.io/random")
         update.message.reply_text(str(i+1)+"/"+str(N)+"\n"+json.loads(response.text)['content']+"\n-"+json.loads(response.text)['author'])
 
-def pornhub(update, context):
+#def pornhub(update, context):
     search_keyword = "-".join(update.message.text.split()[1:])
     N = 1
     if update.message.text.split()[-1].isnumeric():
@@ -57,7 +57,7 @@ def giphy(update, context):
 def help(update, context):
     update.message.reply_text(
         '/giphy <search> <# times>\n'
-        '/pornhub <search> <# times>\n'
+        #'/pornhub <search> <# times>\n'
         '/quote <# times>'
         )
 
@@ -67,7 +67,7 @@ def main():
 
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("giphy", giphy))
-    dp.add_handler(CommandHandler("pornhub", pornhub))
+    #dp.add_handler(CommandHandler("pornhub", pornhub))
     dp.add_handler(CommandHandler("quote", quote))
 
     dp.add_error_handler(error)
