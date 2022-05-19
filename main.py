@@ -20,29 +20,12 @@ def quote(update, context):
         response = requests.get("https://api.quotable.io/random")
         update.message.reply_text(str(i+1)+"/"+str(N)+"\n"+json.loads(response.text)['content']+"\n-"+json.loads(response.text)['author'])
 
-#def pornhub(update, context):
-    search_keyword = "-".join(update.message.text.split()[1:])
-    N = 1
-    if update.message.text.split()[-1].isnumeric():
-        N = int(update.message.text.split()[-1])
-        search_keyword = "-".join(update.message.text.split()[1:-1])
-
-    for i in range(N):
-        URL = 'https://www.pornhub.com/video/search?search='
-        response = requests.get(URL + search_keyword)
-        soup = BeautifulSoup(response.text, 'lxml')
-        ph_links = []
-        for a in soup.find_all('a', href=True):
-            if a['href'].startswith("/view_video"):
-                ph_links.append('https://www.pornhub.com' + a['href'])
-        update.message.reply_text(str(i+1)+"/"+str(N)+"\n"+random.choice(ph_links))
-
 def giphy(update, context):
     search_keyword = "-".join(update.message.text.split()[1:])
-    N = 1
-    if update.message.text.split()[-1].isnumeric():
-        N = int(update.message.text.split()[-1])
-        search_keyword = "-".join(update.message.text.split()[1:-1])
+    #N = 1
+    #if update.message.text.split()[-1].isnumeric():
+    #    N = int(update.message.text.split()[-1])
+    #    search_keyword = "-".join(update.message.text.split()[1:-1])
 
     for i in range(N):
         URL = 'http://api.giphy.com'
@@ -56,9 +39,8 @@ def giphy(update, context):
 
 def help(update, context):
     update.message.reply_text(
-        '/giphy <search> <# times>\n'
-        #'/pornhub <search> <# times>\n'
-        '/quote <# times>'
+        '/giphy <search>\n'
+        '/quote'
         )
 
 def main():
@@ -67,7 +49,6 @@ def main():
 
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("giphy", giphy))
-    #dp.add_handler(CommandHandler("pornhub", pornhub))
     dp.add_handler(CommandHandler("quote", quote))
 
     dp.add_error_handler(error)
